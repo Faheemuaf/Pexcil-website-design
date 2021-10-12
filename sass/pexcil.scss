@@ -1,0 +1,286 @@
+@import url("https://fonts.googleapis.com/css2?family=Lato:wght@100;300;400;700&display=swap");
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+$small: 480px;
+$medium: 760px;
+$large: 992px;
+
+html,
+body {
+    width: 100%;
+    height: 100vh;
+    font-family: "Lato", sans-serif;
+    background-color: goldenrod;
+    font-weight: 300;
+}
+
+h1 {
+    font-size: 28px;
+    line-height: 30px;
+    text-transform: uppercase;
+    margin: 0 0 20px;
+}
+
+P {
+    font-size: 12px;
+}
+
+@mixin common-flex-code {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@mixin arrow-code($direction, $width, $style, $color) {
+    border-#{$direction}: $width $style $color;
+}
+
+@mixin box-color($bg-color, $box-text, $box-border) {
+    background-color: $bg-color;
+    color: $box-text;
+    border-color: $box-border;
+}
+
+@mixin mediaq-code {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+@mixin bottomarrow {
+    content: "";
+    position: absolute;
+    top: 107%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-left: 40px solid transparent;
+    border-right: 40px solid transparent;
+    z-index: 9;
+    transform: translate(-50%, -50%);
+}
+
+.row {
+    @include common-flex-code;
+
+    .left-side,
+    .right-side {
+        width: 50%;
+        height: 50vh;
+        position: relative;
+        background-color: green;
+
+        .pencil-image {
+            width: 100%;
+            height: 100%;
+        }
+
+        .formula-section {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .times {
+            font-size: 25px;
+            font-weight: 400;
+            padding-left: 10px;
+        }
+
+        .formula {
+            padding: 25px 0;
+        }
+    }
+
+    .box {
+        width: 25%;
+        text-align: center;
+        position: relative;
+        height: 50vh;
+        @include common-flex-code;
+
+        .inner {
+            padding: 0 30px;
+
+            .icon {
+                margin: 0 auto 30px;
+            }
+
+            .fa {
+                font-size: 100px;
+            }
+        }
+    }
+
+    .left-side::before {
+        @include arrow-code("left", 36px, solid, #eee);
+    }
+
+    .design::before {
+        @include arrow-code("left", 36px, solid, #333);
+    }
+
+    .tech::before {
+        @include arrow-code("left", 36px, solid, #111);
+    }
+
+    .strategy::before {
+        @include arrow-code("left", 36px, solid, #666);
+    }
+
+    .box,
+    .left-side {
+        &::before,
+        &::after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: calc(100% + 17px);
+            width: 0;
+            height: 0;
+            border-top: 40px solid transparent;
+            border-bottom: 40px solid transparent;
+            z-index: 9;
+            transform: translate(-50%, -50%);
+        }
+    }
+
+    .design {
+        @include box-color(#333, #f90, #f90);
+    }
+
+    .tech {
+        @include box-color(#111, #099, #099);
+    }
+
+    .strategy {
+        @include box-color(#666, #eee, #eee);
+    }
+
+    .Management {
+        @include box-color(#099, #eee, #eee);
+    }
+}
+
+@media screen and (max-width: $small) {
+    .row {
+        display: flex;
+        flex-direction: column;
+
+        .left-side,
+        .right-side,
+        .box {
+            width: 100%;
+        }
+
+        .right-side .formula-section {
+            position: relative;
+            left: 50%;
+            top: 50%;
+            padding: 0 20px;
+        }
+
+        .left-side::before {
+            @include arrow-code("top", 36px, solid, #eee);
+        }
+
+        .design::before {
+            @include arrow-code("top", 36px, solid, #333);
+        }
+
+        .tech::before {
+            @include arrow-code("top", 36px, solid, #111);
+        }
+
+        .strategy::before {
+            @include arrow-code("top", 36px, solid, #666);
+        }
+        .Management {
+            &::before,
+            &::after {
+                display: none;
+            }
+        }
+
+        .box,
+        .left-side {
+            &::before,
+            &::after {
+                @include bottomarrow;
+            }
+        }
+    }
+}
+
+@media screen and (min-width: $small) and (max-width: $medium) {
+    .row {
+        @include mediaq-code;
+
+        .left-side,
+        .right-side {
+            width: 100%;
+        }
+
+        .box {
+            width: 50%;
+        }
+
+        .left-side::before {
+            @include arrow-code("top", 36px, solid, #eee);
+        }
+
+        .left-side {
+            &::before,
+            &::after {
+                @include bottomarrow;
+            }
+        }
+
+        .tech {
+            &::before,
+            &::after {
+                display: none;
+            }
+        }
+    }
+}
+
+@media screen and (min-width: $medium) and (max-width: $large) {
+    .row {
+        @include mediaq-code;
+
+        .left-side,
+        .right-side {
+            width: 100%;
+
+            .pencil-image {
+                width: 100%;
+            }
+        }
+
+        .box {
+            width: 50%;
+        }
+
+        .left-side::before {
+            @include arrow-code("top", 36px, solid, #eee);
+        }
+        .left-side {
+            &::before,
+            &::after {
+                @extend %bottom-arrow;
+            }
+        }
+
+        .tech {
+            &::before,
+            &::after {
+                display: none;
+            }
+        }
+    }
+}
